@@ -1,4 +1,3 @@
-// src/data/mockData.ts
 import { Payment, Invoice } from '@/types';
 
 export const mockPayments: Payment[] = [

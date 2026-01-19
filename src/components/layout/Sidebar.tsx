@@ -1,6 +1,5 @@
-// src/components/layout/sidebar.tsx
 import { Home, FileText, BarChart, Settings, Users, CreditCard, Bell, Search } from 'lucide-react';
-import { Button } from '../ui/Button';
+import { Button } from '../ui/button';
 
 export function Sidebar() {
   const navItems = [

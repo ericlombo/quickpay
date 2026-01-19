@@ -1,9 +1,9 @@
-import { Button } from '../ui/Button';
+import { Button } from '../ui/button';
 import { Plus, Download, Filter } from 'lucide-react';
-// import { useStore } from '@/stores/useStore';
+import { useStore } from '@/stores/useStore';
 
 export function Header() {
-  // const openDrawer = useStore((state) => state.openDrawer);
+  const openDrawer = useStore((state) => state.openDrawer);
 
   return (
     <header className="sticky top-0 z-10 flex h-16 items-center gap-4 border-b border-border bg-background px-6">
@@ -22,10 +22,10 @@ export function Header() {
             <Download className="mr-2 h-4 w-4" />
             Export
           </Button>
-          {/* <Button onClick={openDrawer} size="sm">
+          <Button onClick={openDrawer} size="sm">
             <Plus className="mr-2 h-4 w-4" />
             New Invoice
-          </Button> */}
+          </Button>
         </div>
       </div>
     </header>

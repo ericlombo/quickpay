@@ -2,6 +2,7 @@
 'use client';
 
 import { Header } from '@/components/layout/Header';
+import { MobileMenu } from '@/components/layout/MobileMenu';
 import { StatsCards } from '@/components/dashboard/StatsCards';
 import { PaymentsTable } from '@/components/dashboard/PaymentsTable';
 import { PaymentModal } from '@/components/dashboard/PaymentModal';
@@ -14,7 +15,8 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      <div className="p-6 space-y-6">
+      <MobileMenu />
+      <div className="p-4 sm:p-6 space-y-4 sm:space-y-6 max-w-7xl mx-auto">
         <StatsCards />
         <PaymentsTable payments={payments} />
       </div>

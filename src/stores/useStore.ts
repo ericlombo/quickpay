@@ -9,6 +9,7 @@ interface AppStore {
   selectedPayment: Payment | null;
   isDrawerOpen: boolean;
   isModalOpen: boolean;
+  isMobileMenuOpen: boolean;
   
   // Actions
   setPayments: (payments: Payment[]) => void;
@@ -20,6 +21,9 @@ interface AppStore {
   closeDrawer: () => void;
   openModal: () => void;
   closeModal: () => void;
+  openMobileMenu: () => void;
+  closeMobileMenu: () => void;
+  toggleMobileMenu: () => void;
 }
 
 export const useStore = create<AppStore>((set) => ({
@@ -29,6 +33,7 @@ export const useStore = create<AppStore>((set) => ({
   selectedPayment: null,
   isDrawerOpen: false,
   isModalOpen: false,
+  isMobileMenuOpen: false,
   
   // Actions
   setPayments: (payments) => set({ payments }),
@@ -43,5 +48,8 @@ export const useStore = create<AppStore>((set) => ({
   openDrawer: () => set({ isDrawerOpen: true }),
   closeDrawer: () => set({ isDrawerOpen: false }),
   openModal: () => set({ isModalOpen: true }),
-  closeModal: () => set({ isModalOpen: false }),
+  closeModal: () => set({ isModalOpen: false, selectedPayment: null }),
+  openMobileMenu: () => set({ isMobileMenuOpen: true }),
+  closeMobileMenu: () => set({ isMobileMenuOpen: false }),
+  toggleMobileMenu: () => set((state) => ({ isMobileMenuOpen: !state.isMobileMenuOpen })),
 }));

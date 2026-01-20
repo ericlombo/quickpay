@@ -1,8 +1,8 @@
-// src/app/layout.tsx
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import { Sidebar } from '@/components/layout/Sidebar';
+import { Toaster } from 'sonner';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -25,6 +25,16 @@ export default function RootLayout({
             {children}
           </main>
         </div>
+        <Toaster 
+          position="top-center" 
+          richColors 
+          toastOptions={{
+            className: 'sm:top-4 top-2',
+            style: {
+              maxWidth: '95vw',
+            },
+          }}
+        />
       </body>
     </html>
   );

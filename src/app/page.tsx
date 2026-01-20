@@ -7,6 +7,7 @@ import { StatsCards } from '@/components/dashboard/StatsCards';
 import { PaymentsTable } from '@/components/dashboard/PaymentsTable';
 import { PaymentModal } from '@/components/dashboard/PaymentModal';
 import { NewInvoiceDrawer } from '@/components/dashboard/NewInvoiceDrawer';
+import { InvoicePreviewModal } from '@/components/dashboard/InvoicePreviewModal';
 import { useStore } from '@/stores/useStore';
 
 export default function Home() {
@@ -22,6 +23,7 @@ export default function Home() {
       </div>
       <PaymentModal />
       <NewInvoiceDrawer />
+      <InvoicePreviewModal />
     </div>
   );
 }

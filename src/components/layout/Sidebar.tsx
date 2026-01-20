@@ -1,5 +1,6 @@
 import { Home, FileText, BarChart, Settings, Users, CreditCard, Bell, Search } from 'lucide-react';
 import { Button } from '../ui/button';
+import { cn } from '@/lib/utils';
 
 export function Sidebar() {
   const navItems = [
@@ -13,51 +14,56 @@ export function Sidebar() {
 
   return (
     <div className="hidden md:flex md:w-64 md:flex-col md:fixed md:inset-y-0 z-30">
-      <div className="flex flex-col grow border-r border-border bg-card shadow-sm pt-6">
-        <div className="flex items-center px-6 pb-6">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-lg bg-primary flex items-center justify-center shadow-sm">
-              <CreditCard className="h-5 w-5 text-primary-foreground" />
-            </div>
-            <span className="text-xl font-semibold tracking-tight">QuickPay</span>
+      <div className="flex flex-col grow bg-sidebar text-sidebar-foreground pt-6">
+        {/* Header - Minimal Text Logo */}
+        <div className="px-6 pb-6 flex items-center gap-3">
+          <div className="h-8 w-8 rounded bg-white text-blue-600 flex items-center justify-center shadow-sm">
+            <CreditCard className="h-5 w-5 fill-current" />
           </div>
+          <span className="font-bold text-xl tracking-tight text-white">QuickPay</span>
         </div>
-        
-        <div className="px-6 pb-4">
+
+        {/* Search - Subtle */}
+        <div className="px-4 pb-6">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/60" />
             <input
               type="search"
               placeholder="Search..."
-              aria-label="Search"
-              className="w-full pl-10 pr-4 py-2 rounded-md border border-border bg-background text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-0 transition-colors"
+              className="w-full pl-9 pr-4 py-2.5 text-sm rounded-lg border border-white/20 bg-white/10 text-white placeholder:text-white/60 focus:outline-none focus:ring-1 focus:ring-white/30 transition-all"
             />
           </div>
         </div>
 
+        {/* Navigation - Clean & Compact */}
         <nav className="flex-1 px-3 space-y-1">
           {navItems.map((item) => (
-            <Button
+            <button
               key={item.label}
-              variant={item.active ? 'secondary' : 'ghost'}
-              className="w-full justify-start gap-3"
+              className={cn(
+                "w-full flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg transition-colors",
+                item.active
+                  ? "bg-white/15 text-white"
+                  : "text-white/80 hover:bg-white/10 hover:text-white"
+              )}
             >
-              <item.icon className="h-4 w-4" />
+              <item.icon className={cn("h-4 w-4", item.active ? "text-white" : "text-white/80")} />
               {item.label}
-            </Button>
+            </button>
           ))}
         </nav>
 
-        <div className="p-4 border-t border-border">
+        {/* User Profile - Minimal Footer */}
+        <div className="p-4 mt-auto border-t border-white/10">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center">
-              <span className="text-sm font-medium text-primary">EM</span>
+            <div className="h-8 w-8 rounded-full bg-white/20 flex items-center justify-center border border-white/10">
+              <span className="text-xs font-medium text-white">EM</span>
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium truncate">Eric Mwakio</p>
-              <p className="text-xs text-muted-foreground">Admin</p>
+              <p className="text-sm font-medium truncate text-white">Eric Mwakio</p>
+              <p className="text-xs text-white/70 truncate">admin@quickpay.com</p>
             </div>
-            <Button variant="ghost" size="icon" className="h-8 w-8">
+            <Button variant="ghost" size="icon" className="h-8 w-8 text-white/70 hover:bg-white/10 hover:text-white">
               <Bell className="h-4 w-4" />
             </Button>
           </div>

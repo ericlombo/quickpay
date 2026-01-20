@@ -48,7 +48,8 @@ export function NewInvoiceDrawer() {
   const isDrawerOpen = useStore((state) => state.isDrawerOpen);
   const closeDrawer = useStore((state) => state.closeDrawer);
   const addInvoice = useStore((state) => state.addInvoice);
-  
+  const openInvoicePreview = useStore((state) => state.openInvoicePreview);
+
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const form = useForm<InvoiceFormData>({
@@ -87,7 +88,7 @@ export function NewInvoiceDrawer() {
 
   const items = watch('items');
   const taxRate = watch('taxRate') ?? 10;
-  
+
   const calculateTotals = () => {
     const subtotal = items.reduce((sum, item) => sum + (item.quantity * item.price), 0);
     const tax = subtotal * (taxRate / 100);
@@ -121,9 +122,24 @@ export function NewInvoiceDrawer() {
       addInvoice(newInvoice);
       reset();
       closeDrawer();
+      // Show pending toast first if desired, but user asked for success to be Green. 
+      // Sonner success is usually green by default or can be styled.
       toast.success('Invoice created successfully', {
-        description: `Invoice ${newInvoice.invoiceNumber} has been created.`,
+        description: `Invoice ${newInvoice.invoiceNumber} has been created and is ready for review.`,
+        duration: 4000, // slightly longer to be seen
+        style: {
+          background: 'hsl(var(--background))',
+          color: 'hsl(var(--foreground))',
+          border: '1px solid hsl(142.1 76.2% 36.3%)', // Green border
+        },
+        className: 'text-green-600', // Start with text green
       });
+
+      // Open the preview immediately
+      setTimeout(() => {
+        openInvoicePreview(newInvoice);
+      }, 500); // Small delay for smooth transition
+
     } catch (error) {
       console.error('Error creating invoice:', error);
       toast.error('Failed to create invoice', {
@@ -142,8 +158,8 @@ export function NewInvoiceDrawer() {
 
   return (
     <Drawer open={isDrawerOpen} onOpenChange={handleOpenChange}>
-      <DrawerContent 
-        side="right" 
+      <DrawerContent
+        side="right"
         className="h-full w-full sm:max-w-md rounded-l-xl rounded-r-none sm:rounded-r-none"
       >
         <DrawerHeader className="border-b px-4 sm:px-6 py-4">
@@ -160,7 +176,7 @@ export function NewInvoiceDrawer() {
             </Button>
           </div>
         </DrawerHeader>
-        
+
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-1 flex-col overflow-hidden">
           <div className="flex-1 overflow-y-auto px-4 sm:px-6 py-4 sm:py-6">
             <div className="space-y-6">
@@ -199,7 +215,7 @@ export function NewInvoiceDrawer() {
                       {...register('clientAddress')}
                       placeholder="123 Main St, City, State, ZIP"
                       rows={3}
-                      className={`min-h-[44px] text-base sm:text-sm ${errors.clientAddress ? 'border-destructive' : ''}`}
+                      className={`min-h-11 text-base sm:text-sm ${errors.clientAddress ? 'border-destructive' : ''}`}
                     />
                     {errors.clientAddress && (
                       <p className="text-xs text-destructive">{errors.clientAddress.message}</p>
@@ -208,7 +224,7 @@ export function NewInvoiceDrawer() {
                 </div>
               </div>
 
-                  <div className="space-y-3 sm:space-y-4">
+              <div className="space-y-3 sm:space-y-4">
                 <div className="flex items-center justify-between gap-2">
                   <h3 className="text-sm font-semibold text-foreground">Invoice Items</h3>
                   <Button
@@ -222,7 +238,7 @@ export function NewInvoiceDrawer() {
                     Add Item
                   </Button>
                 </div>
-                
+
                 <div className="space-y-3">
                   {fields.map((field, index) => {
                     const itemErrors = errors.items?.[index];
@@ -358,8 +374,8 @@ export function NewInvoiceDrawer() {
               >
                 Cancel
               </Button>
-              <Button 
-                type="submit" 
+              <Button
+                type="submit"
                 disabled={isSubmitting}
                 className="h-11 sm:h-10 w-full sm:w-auto text-sm"
               >

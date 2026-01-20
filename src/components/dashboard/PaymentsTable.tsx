@@ -21,10 +21,18 @@ interface PaymentsTableProps {
 }
 
 const statusConfig = {
-  success: { icon: CheckCircle, variant: 'default' as const, color: 'text-green-600' },
-  pending: { icon: Clock, variant: 'secondary' as const, color: 'text-amber-600' },
-  processing: { icon: AlertCircle, variant: 'outline' as const, color: 'text-blue-600' },
-  failed: { icon: XCircle, variant: 'destructive' as const, color: 'text-red-600' },
+  success: {
+    icon: CheckCircle,
+    variant: 'outline' as const,
+    className: 'border-green-500/50 bg-green-500/10 text-green-700 hover:bg-green-500/20'
+  },
+  pending: {
+    icon: Clock,
+    variant: 'outline' as const,
+    className: 'border-blue-500/50 bg-blue-500/10 text-blue-700 hover:bg-blue-500/20'
+  },
+  processing: { icon: AlertCircle, variant: 'outline' as const, className: 'text-blue-600' },
+  failed: { icon: XCircle, variant: 'destructive' as const, className: '' },
 };
 
 export function PaymentsTable({ payments }: PaymentsTableProps) {
@@ -66,10 +74,10 @@ export function PaymentsTable({ payments }: PaymentsTableProps) {
           </Button>
         </div>
         {payments.map((payment) => {
-          const { icon: StatusIcon, variant, color } = statusConfig[payment.status];
+          const { icon: StatusIcon, variant, className } = statusConfig[payment.status];
           return (
-            <Card 
-              key={payment.id} 
+            <Card
+              key={payment.id}
               className="border shadow-sm cursor-pointer hover:shadow-md transition-shadow active:scale-[0.99]"
               onClick={() => handleViewPayment(payment)}
             >
@@ -81,8 +89,8 @@ export function PaymentsTable({ payments }: PaymentsTableProps) {
                     </CardTitle>
                     <p className="text-xs text-muted-foreground truncate">{payment.email}</p>
                   </div>
-                  <Badge variant={variant} className="gap-1 shrink-0 ml-2">
-                    <StatusIcon className={`h-3 w-3 ${color}`} />
+                  <Badge variant={variant} className={`gap-1 shrink-0 ml-2 ${className}`}>
+                    <StatusIcon className="h-3 w-3" />
                     <span className="hidden sm:inline">
                       {payment.status.charAt(0).toUpperCase() + payment.status.slice(1)}
                     </span>
@@ -115,9 +123,9 @@ export function PaymentsTable({ payments }: PaymentsTableProps) {
                     <Eye className="h-4 w-4 mr-1.5" />
                     View
                   </Button>
-                  <Button 
-                    variant="ghost" 
-                    size="sm" 
+                  <Button
+                    variant="ghost"
+                    size="sm"
                     className="h-9 w-9 p-0"
                     onClick={(e) => e.stopPropagation()}
                   >
@@ -145,50 +153,50 @@ export function PaymentsTable({ payments }: PaymentsTableProps) {
             </Button>
           </div>
         </div>
-        
+
         <div className="overflow-x-auto -mx-px">
           <Table>
             <TableHeader>
               <TableRow className="hover:bg-transparent">
-                <TableHead className="font-semibold min-w-[180px]">Customer</TableHead>
-                <TableHead className="font-semibold min-w-[100px]">Invoice</TableHead>
-                <TableHead className="font-semibold min-w-[100px]">Amount</TableHead>
-                <TableHead className="font-semibold min-w-[120px]">Date</TableHead>
-                <TableHead className="font-semibold min-w-[120px]">Status</TableHead>
-                <TableHead className="text-right font-semibold min-w-[100px]">Actions</TableHead>
+                <TableHead className="font-semibold min-w-45">Customer</TableHead>
+                <TableHead className="font-semibold min-w-25">Invoice</TableHead>
+                <TableHead className="font-semibold min-w-25">Amount</TableHead>
+                <TableHead className="font-semibold min-w-30">Date</TableHead>
+                <TableHead className="font-semibold min-w-30">Status</TableHead>
+                <TableHead className="text-right font-semibold min-w-25">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {payments.map((payment) => {
-                const { icon: StatusIcon, variant, color } = statusConfig[payment.status];
+                const { icon: StatusIcon, variant, className } = statusConfig[payment.status];
                 return (
-                  <TableRow 
-                    key={payment.id} 
+                  <TableRow
+                    key={payment.id}
                     className="hover:bg-muted/50 transition-colors cursor-pointer"
                     onClick={() => handleViewPayment(payment)}
                   >
-                    <TableCell className="min-w-[180px]">
+                    <TableCell className="min-w-45">
                       <div>
                         <p className="font-medium">{payment.customer}</p>
                         <p className="text-sm text-muted-foreground">{payment.email}</p>
                       </div>
                     </TableCell>
-                    <TableCell className="font-mono text-sm min-w-[100px]">
+                    <TableCell className="font-mono text-sm min-w-25">
                       {payment.invoiceNumber}
                     </TableCell>
-                    <TableCell className="font-semibold min-w-[100px]">
+                    <TableCell className="font-semibold min-w-25">
                       {formatCurrency(payment.amount)}
                     </TableCell>
-                    <TableCell className="text-muted-foreground min-w-[120px]">
+                    <TableCell className="text-muted-foreground min-w-30">
                       {formatDate(payment.date)}
                     </TableCell>
-                    <TableCell className="min-w-[120px]">
-                      <Badge variant={variant} className="gap-1.5">
-                        <StatusIcon className={`h-3 w-3 ${color}`} />
+                    <TableCell className="min-w-30">
+                      <Badge variant={variant} className={`gap-1.5 ${className}`}>
+                        <StatusIcon className="h-3 w-3" />
                         {payment.status.charAt(0).toUpperCase() + payment.status.slice(1)}
                       </Badge>
                     </TableCell>
-                    <TableCell className="text-right min-w-[100px]">
+                    <TableCell className="text-right min-w-25">
                       <div className="flex justify-end gap-2" onClick={(e) => e.stopPropagation()}>
                         <Button
                           variant="ghost"

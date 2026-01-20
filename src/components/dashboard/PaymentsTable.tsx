@@ -117,64 +117,49 @@ export function PaymentsTable({ payments }: PaymentsTableProps) {
       </div>
 
       {/* Desktop Table View */}
-      <div className="rounded-lg border border-border/50 bg-card/98 shadow-sm overflow-hidden transition-all duration-200 hover:shadow-md">
+      <div className="bg-transparent">
         <div className="overflow-x-auto">
           <Table>
             <TableHeader>
-              <TableRow className="hover:bg-transparent border-b border-border/60">
-                <TableHead className="font-semibold text-foreground min-w-45 py-4">Customer</TableHead>
-                <TableHead className="font-semibold text-foreground min-w-25 py-4">Invoice</TableHead>
-                <TableHead className="font-semibold text-foreground min-w-25 py-4">Amount</TableHead>
-                <TableHead className="font-semibold text-foreground min-w-30 py-4">Date</TableHead>
-                <TableHead className="font-semibold text-foreground min-w-30 py-4">Status</TableHead>
-                <TableHead className="text-right font-semibold text-foreground min-w-25 py-4">Actions</TableHead>
+              <TableRow className="hover:bg-transparent border-b border-gray-100">
+                <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wider pl-0 py-4 w-[10%]">No.</TableHead>
+                <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wider py-4 w-[15%]">Date</TableHead>
+                <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wider py-4 w-[25%]">Client</TableHead>
+                <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wider text-right py-4 w-[15%]">Amount</TableHead>
+                <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wider text-right py-4 w-[15%]">Status</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {payments.map((payment) => (
                 <TableRow
                   key={payment.id}
-                  className="hover:bg-muted/40 transition-colors cursor-pointer border-b border-border/60 last:border-b-0 py-4"
+                  className="hover:bg-blue-50/50 transition-colors cursor-pointer border-b border-gray-100 last:border-b-0"
                   onClick={() => handleViewPayment(payment)}
                 >
-                  <TableCell className="min-w-45 py-4">
-                    <div>
-                      <p className="font-medium text-sm">{payment.customer}</p>
-                      <p className="text-xs text-muted-foreground">{payment.email}</p>
-                    </div>
-                  </TableCell>
-                  <TableCell className="font-mono text-sm min-w-25 py-4 text-muted-foreground">
+                  <TableCell className="py-5 font-bold text-sm text-foreground pl-0">
                     {payment.invoiceNumber}
                   </TableCell>
-                  <TableCell className="font-semibold min-w-25 py-4">
-                    {formatCurrency(payment.amount)}
-                  </TableCell>
-                  <TableCell className="text-muted-foreground text-sm min-w-30 py-4">
+                  <TableCell className="py-5 text-sm text-muted-foreground">
                     {formatDate(payment.date)}
                   </TableCell>
-                  <TableCell className="min-w-30 py-4">
-                    <StatusIndicator status={payment.status} />
-                  </TableCell>
-                  <TableCell className="text-right min-w-25 py-4">
-                    <div className="flex justify-end gap-1" onClick={(e) => e.stopPropagation()}>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="h-8 w-8 text-muted-foreground hover:text-foreground transition-all duration-150 hover:-translate-y-0.5 hover:shadow-sm"
-                        onClick={() => handleViewPayment(payment)}
-                        title="View details"
-                      >
-                        <Eye className="h-4 w-4" />
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="h-8 w-8 text-muted-foreground hover:text-foreground transition-all duration-150 hover:-translate-y-0.5 hover:shadow-sm"
-                        title="More actions"
-                      >
-                        <MoreVertical className="h-4 w-4" />
-                      </Button>
+                  <TableCell className="py-5">
+                    <div>
+                      <p className="font-semibold text-sm text-foreground">{payment.customer}</p>
                     </div>
+                  </TableCell>
+                  <TableCell className="py-5 text-right font-bold text-sm text-foreground">
+                    {formatCurrency(payment.amount)}
+                  </TableCell>
+                  <TableCell className="py-5 text-right">
+                    <span
+                      className={`inline-flex items-center justify-center px-3 py-1 rounded-full text-xs font-medium min-w-[80px]
+                        ${payment.status === 'success' ? 'bg-green-100 text-green-700' :
+                          payment.status === 'pending' ? 'bg-blue-100 text-blue-700' :
+                            'bg-orange-100 text-orange-700'}`}
+                    >
+                      {payment.status === 'success' ? 'Paid' :
+                        payment.status === 'pending' ? 'Pending' : 'Draft'}
+                    </span>
                   </TableCell>
                 </TableRow>
               ))}

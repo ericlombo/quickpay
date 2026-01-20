@@ -26,18 +26,15 @@ export function Sidebar() {
   ];
 
   return (
-    <div className="hidden md:flex fixed top-0 left-0 h-screen w-64 z-30">
-      <div className="relative flex flex-col w-full bg-linear-to-b from-blue-600 via-blue-650 to-blue-700 text-white pt-8 shadow-lg rounded-tr-[32px] rounded-br-[32px] overflow-hidden">
-
-        {/* INNER CURVE — stays INSIDE sidebar */}
-        <div className="pointer-events-none absolute top-0 right-0 h-full w-6 bg-muted/20 rounded-l-[999px]" />
+    <div className="hidden md:flex fixed top-0 left-0 h-screen w-64 z-30 bg-[#0F53FF] text-white">
+      <div className="relative flex flex-col w-full h-full pt-8">
 
         {/* Brand */}
         <div className="px-6 pb-8 flex items-center gap-3 relative z-10">
           <div className="h-10 w-10 rounded bg-white text-blue-600 flex items-center justify-center shadow-md">
             <FileText className="h-6 w-6" />
           </div>
-          <span className="font-bold text-lg tracking-tight">QuickPay</span>
+          <span className="font-bold text-lg tracking-tight uppercase">QuickPay</span>
         </div>
 
         {/* Navigation */}
@@ -49,10 +46,10 @@ export function Sidebar() {
                   item.id === 'payments' && setPaymentsExpanded(!paymentsExpanded)
                 }
                 className={cn(
-                  'w-full flex items-center justify-between px-4 py-2.5 text-xs font-medium rounded-lg transition-all',
+                  "w-full flex items-center justify-between px-6 py-3 text-xs font-semibold rounded-none transition-all border-l-4",
                   item.id === 'payments'
-                    ? 'bg-white/10 text-white'
-                    : 'text-white/75 hover:bg-white/10 hover:text-white'
+                    ? "border-white bg-[#1A5CFF]"
+                    : "border-transparent text-blue-100 hover:text-white hover:bg-white/5"
                 )}
               >
                 <span className="tracking-wider">{item.label}</span>

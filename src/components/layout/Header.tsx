@@ -8,7 +8,7 @@ export function Header() {
   const [userMenuOpen, setUserMenuOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-40 flex h-14 sm:h-16 items-center border-b border-border/50 bg-background/95 backdrop-blur-sm px-4 sm:px-6 transition-all duration-150">
+    <header className="sticky top-0 z-40 flex h-20 items-center px-8 bg-transparent">
       <div className="flex flex-1 items-center justify-between">
         {/* Left side: Mobile Menu + Title */}
         <div className="flex items-center gap-4">

@@ -19,10 +19,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className="min-h-screen w-full bg-muted/20">
+        <div className="min-h-screen w-full bg-[#0F53FF]">
           <Sidebar />
-          <main className="min-h-screen md:ml-64">
-            {children}
+          <main className="min-h-screen md:ml-64 bg-[#0F53FF]">
+            <div className="min-h-screen w-full bg-[#F8F9FB] rounded-l-[40px] overflow-hidden relative shadow-none">
+              {children}
+            </div>
           </main>
         </div>
 

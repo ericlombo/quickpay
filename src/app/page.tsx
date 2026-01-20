@@ -18,6 +18,17 @@ export default function Home() {
   const payments = useStore((state) => state.payments);
   const openDrawer = useStore((state) => state.openDrawer);
   const [showAllOpen, setShowAllOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const filteredPayments = payments.filter((payment) => {
+    const query = searchQuery.toLowerCase();
+    return (
+      payment.customer.toLowerCase().includes(query) ||
+      payment.invoiceNumber.toLowerCase().includes(query) ||
+      payment.amount.toString().includes(query)
+    );
+  });
+
 
   return (
     <>
@@ -48,6 +59,8 @@ export default function Home() {
                 type="search"
                 placeholder="Search an Invoice"
                 className="w-full bg-white border-gray-200 focus:border-blue-500 rounded-lg pl-10 py-5 shadow-sm"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
               />
               <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-search"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" /></svg>
@@ -84,7 +97,7 @@ export default function Home() {
         </div>
 
         {/* Payments Table */}
-        <PaymentsTable payments={payments} />
+        <PaymentsTable payments={filteredPayments} />
       </div>
       <PaymentModal />
       <NewInvoiceDrawer />

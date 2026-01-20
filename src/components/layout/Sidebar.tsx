@@ -26,52 +26,54 @@ export function Sidebar() {
   ];
 
   return (
-    <div className="hidden md:flex w-64 flex-col sticky top-0 h-screen shrink-0 z-30">
-      <div className="flex flex-col grow bg-linear-to-b from-blue-600 to-blue-700 text-white pt-8 relative overflow-hidden">
-        {/* Curved swoosh bottom-left decoration */}
-        <div className="absolute bottom-0 left-0 w-full h-32 bg-white opacity-5 rounded-tr-full"></div>
+    <div className="hidden md:flex fixed top-0 left-0 h-screen w-64 z-30">
+      <div className="relative flex flex-col w-full bg-linear-to-b from-blue-600 via-blue-650 to-blue-700 text-white pt-8 shadow-lg rounded-tr-[32px] rounded-br-[32px] overflow-hidden">
 
-        {/* Header - Brand Row */}
+        {/* INNER CURVE — stays INSIDE sidebar */}
+        <div className="pointer-events-none absolute top-0 right-0 h-full w-6 bg-muted/20 rounded-l-[999px]" />
+
+        {/* Brand */}
         <div className="px-6 pb-8 flex items-center gap-3 relative z-10">
           <div className="h-10 w-10 rounded bg-white text-blue-600 flex items-center justify-center shadow-md">
-            <FileText className="h-6 w-6 fill-current" />
+            <FileText className="h-6 w-6" />
           </div>
-          <span className="font-bold text-lg tracking-tight text-white">QuickPay</span>
+          <span className="font-bold text-lg tracking-tight">QuickPay</span>
         </div>
 
-        {/* Navigation - Uppercase */}
+        {/* Navigation */}
         <nav className="flex-1 px-4 space-y-1 relative z-10">
           {mainNavItems.map((item) => (
             <div key={item.id}>
               <button
-                onClick={() => item.id === 'payments' && setPaymentsExpanded(!paymentsExpanded)}
+                onClick={() =>
+                  item.id === 'payments' && setPaymentsExpanded(!paymentsExpanded)
+                }
                 className={cn(
-                  "w-full flex items-center justify-between px-4 py-3 text-xs font-semibold rounded-xl transition-all",
+                  'w-full flex items-center justify-between px-4 py-2.5 text-xs font-medium rounded-lg transition-all',
                   item.id === 'payments'
-                    ? "bg-white/20 text-white"
-                    : "text-white/80 hover:bg-white/10 hover:text-white"
+                    ? 'bg-white/10 text-white'
+                    : 'text-white/75 hover:bg-white/10 hover:text-white'
                 )}
               >
                 <span className="tracking-wider">{item.label}</span>
                 {item.hasSubmenu && (
                   <ChevronDown
                     className={cn(
-                      "h-4 w-4 transition-transform",
-                      paymentsExpanded ? "rotate-180" : ""
+                      'h-4 w-4 transition-transform',
+                      paymentsExpanded && 'rotate-180'
                     )}
                   />
                 )}
               </button>
 
-              {/* Submenu for PAYMENTS */}
               {item.id === 'payments' && paymentsExpanded && (
                 <div className="ml-4 mt-2 space-y-2 border-l border-white/20 pl-3">
-                  {paymentSubItems.map((subitem) => (
+                  {paymentSubItems.map((sub) => (
                     <button
-                      key={subitem.id}
-                      className="w-full text-left text-sm text-white/70 hover:text-white py-2 transition-colors"
+                      key={sub.id}
+                      className="block w-full text-left text-sm text-white/65 hover:text-white/90 py-2"
                     >
-                      {subitem.label}
+                      {sub.label}
                     </button>
                   ))}
                 </div>
@@ -80,15 +82,13 @@ export function Sidebar() {
           ))}
         </nav>
 
-        {/* Divider */}
-        <div className="mx-4 border-t border-white/20 relative z-10"></div>
+        <div className="mx-4 border-t border-white/20" />
 
-        {/* Bottom Links */}
-        <div className="px-4 py-6 space-y-3 relative z-10">
+        <div className="px-4 py-6 space-y-3">
           {bottomLinks.map((link) => (
             <button
               key={link.id}
-              className="w-full text-left text-xs font-semibold text-white/80 hover:text-white py-2 transition-colors tracking-wide"
+              className="block w-full text-left text-xs font-medium text-white/70 hover:text-white py-2"
             >
               {link.label}
             </button>

@@ -3,7 +3,7 @@
 
 import { Header } from '@/components/layout/Header';
 import { MobileMenu } from '@/components/layout/MobileMenu';
-import { StatsCards } from '@/components/dashboard/StatsCards';
+import { TopSummaryRow } from '@/components/dashboard/TopSummaryRow';
 import { PaymentsTable } from '@/components/dashboard/PaymentsTable';
 import { PaymentModal } from '@/components/dashboard/PaymentModal';
 import { NewInvoiceDrawer } from '@/components/dashboard/NewInvoiceDrawer';
@@ -23,17 +23,17 @@ export default function Home() {
     <>
       <Header />
       <MobileMenu />
-      <div className="overflow-y-auto p-4 sm:p-6 space-y-6">
-        {/* Stats Row */}
-        <StatsCards />
+      <div className="p-4 sm:p-6 space-y-6">
+        {/* Top Summary Row */}
+        <TopSummaryRow />
 
         {/* Invoices Section */}
         <div className="space-y-4">
           {/* Title Row */}
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-2xl font-semibold tracking-tight">Invoices</h2>
-              <p className="text-sm text-muted-foreground mt-1">List of all your recent transactions.</p>
+              <h2 className="text-2xl font-medium tracking-tight">Invoices</h2>
+              <p className="text-sm text-muted-foreground/85 mt-1.5">List of all your recent transactions.</p>
             </div>
             <Button onClick={openDrawer} className="gap-2">
               <Plus className="h-4 w-4" />

@@ -117,7 +117,7 @@ export function PaymentsTable({ payments }: PaymentsTableProps) {
       </div>
 
       {/* Desktop Table View */}
-      <div className="rounded-lg border border-border bg-card shadow-sm overflow-hidden">
+      <div className="rounded-lg border border-border/50 bg-card/98 shadow-sm overflow-hidden transition-all duration-200 hover:shadow-md">
         <div className="overflow-x-auto">
           <Table>
             <TableHeader>
@@ -160,7 +160,7 @@ export function PaymentsTable({ payments }: PaymentsTableProps) {
                       <Button
                         variant="ghost"
                         size="icon"
-                        className="h-8 w-8 text-muted-foreground hover:text-foreground transition-colors"
+                        className="h-8 w-8 text-muted-foreground hover:text-foreground transition-all duration-150 hover:-translate-y-0.5 hover:shadow-sm"
                         onClick={() => handleViewPayment(payment)}
                         title="View details"
                       >
@@ -169,7 +169,7 @@ export function PaymentsTable({ payments }: PaymentsTableProps) {
                       <Button
                         variant="ghost"
                         size="icon"
-                        className="h-8 w-8 text-muted-foreground hover:text-foreground transition-colors"
+                        className="h-8 w-8 text-muted-foreground hover:text-foreground transition-all duration-150 hover:-translate-y-0.5 hover:shadow-sm"
                         title="More actions"
                       >
                         <MoreVertical className="h-4 w-4" />

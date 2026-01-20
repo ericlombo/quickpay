@@ -14,16 +14,18 @@ export default function Home() {
   const payments = useStore((state) => state.payments);
 
   return (
-    <div className="min-h-screen bg-background">
+    <>
       <Header />
       <MobileMenu />
-      <div className="p-4 sm:p-6 space-y-4 sm:space-y-6 max-w-7xl mx-auto">
-        <StatsCards />
-        <PaymentsTable payments={payments} />
+      <div className="overflow-y-auto p-4 sm:p-6 space-y-4 sm:space-y-6">
+        <div className="max-w-full">
+          <StatsCards />
+          <PaymentsTable payments={payments} />
+        </div>
       </div>
       <PaymentModal />
       <NewInvoiceDrawer />
       <InvoicePreviewModal />
-    </div>
+    </>
   );
 }

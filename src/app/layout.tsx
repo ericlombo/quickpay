@@ -20,10 +20,12 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <div className="min-h-screen bg-muted/30">
-          <Sidebar />
-          <main className="min-h-screen overflow-y-auto md:pl-64">
-            {children}
-          </main>
+          <div className="flex min-h-screen w-full">
+            <Sidebar />
+            <main className="flex-1 min-w-0">
+              {children}
+            </main>
+          </div>
         </div>
 
         <Toaster

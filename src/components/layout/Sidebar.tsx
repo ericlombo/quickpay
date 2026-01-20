@@ -1,72 +1,98 @@
-import { Home, FileText, BarChart, Settings, Users, CreditCard, Bell, Search } from 'lucide-react';
-import { Button } from '../ui/button';
+'use client';
+
+import { FileText, ChevronDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useState } from 'react';
 
 export function Sidebar() {
-  const navItems = [
-    { icon: Home, label: 'Dashboard', active: true },
-    { icon: CreditCard, label: 'Payments' },
-    { icon: FileText, label: 'Invoices' },
-    { icon: Users, label: 'Customers' },
-    { icon: BarChart, label: 'Analytics' },
-    { icon: Settings, label: 'Settings' },
+  const [paymentsExpanded, setPaymentsExpanded] = useState(true);
+
+  const mainNavItems = [
+    { label: 'HOME', id: 'home' },
+    { label: 'COMPANY', id: 'company' },
+    { label: 'PERKS', id: 'perks' },
+    { label: 'LEGAL', id: 'legal' },
+    { label: 'PAYMENTS', id: 'payments', hasSubmenu: true },
+  ];
+
+  const paymentSubItems = [
+    { label: 'Settings', id: 'payments-settings' },
+    { label: 'Clients', id: 'payments-clients' },
+  ];
+
+  const bottomLinks = [
+    { label: 'GET HELP', id: 'help' },
+    { label: 'CHAT WITH US', id: 'chat' },
   ];
 
   return (
-    <div className="hidden md:flex md:w-64 md:flex-col md:fixed md:inset-y-0 z-30">
-      <div className="flex flex-col grow bg-sidebar text-sidebar-foreground pt-6">
-        {/* Header - Minimal Text Logo */}
-        <div className="px-6 pb-6 flex items-center gap-3">
-          <div className="h-8 w-8 rounded bg-white text-blue-600 flex items-center justify-center shadow-sm">
-            <CreditCard className="h-5 w-5 fill-current" />
+    <div className="hidden md:flex w-64 flex-col sticky top-0 h-screen shrink-0 z-30">
+      <div className="flex flex-col grow bg-linear-to-b from-blue-600 to-blue-700 text-white pt-8 relative overflow-hidden">
+        {/* Curved swoosh bottom-left decoration */}
+        <div className="absolute bottom-0 left-0 w-full h-32 bg-white opacity-5 rounded-tr-full"></div>
+
+        {/* Header - Brand Row */}
+        <div className="px-6 pb-8 flex items-center gap-3 relative z-10">
+          <div className="h-10 w-10 rounded bg-white text-blue-600 flex items-center justify-center shadow-md">
+            <FileText className="h-6 w-6 fill-current" />
           </div>
-          <span className="font-bold text-xl tracking-tight text-white">QuickPay</span>
+          <span className="font-bold text-lg tracking-tight text-white">QuickPay</span>
         </div>
 
-        {/* Search - Subtle */}
-        <div className="px-4 pb-6">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/60" />
-            <input
-              type="search"
-              placeholder="Search..."
-              className="w-full pl-9 pr-4 py-2.5 text-sm rounded-lg border border-white/20 bg-white/10 text-white placeholder:text-white/60 focus:outline-none focus:ring-1 focus:ring-white/30 transition-all"
-            />
-          </div>
-        </div>
+        {/* Navigation - Uppercase */}
+        <nav className="flex-1 px-4 space-y-1 relative z-10">
+          {mainNavItems.map((item) => (
+            <div key={item.id}>
+              <button
+                onClick={() => item.id === 'payments' && setPaymentsExpanded(!paymentsExpanded)}
+                className={cn(
+                  "w-full flex items-center justify-between px-4 py-3 text-xs font-semibold rounded-xl transition-all",
+                  item.id === 'payments'
+                    ? "bg-white/20 text-white"
+                    : "text-white/80 hover:bg-white/10 hover:text-white"
+                )}
+              >
+                <span className="tracking-wider">{item.label}</span>
+                {item.hasSubmenu && (
+                  <ChevronDown
+                    className={cn(
+                      "h-4 w-4 transition-transform",
+                      paymentsExpanded ? "rotate-180" : ""
+                    )}
+                  />
+                )}
+              </button>
 
-        {/* Navigation - Clean & Compact */}
-        <nav className="flex-1 px-3 space-y-1">
-          {navItems.map((item) => (
-            <button
-              key={item.label}
-              className={cn(
-                "w-full flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg transition-colors",
-                item.active
-                  ? "bg-white/15 text-white"
-                  : "text-white/80 hover:bg-white/10 hover:text-white"
+              {/* Submenu for PAYMENTS */}
+              {item.id === 'payments' && paymentsExpanded && (
+                <div className="ml-4 mt-2 space-y-2 border-l border-white/20 pl-3">
+                  {paymentSubItems.map((subitem) => (
+                    <button
+                      key={subitem.id}
+                      className="w-full text-left text-sm text-white/70 hover:text-white py-2 transition-colors"
+                    >
+                      {subitem.label}
+                    </button>
+                  ))}
+                </div>
               )}
-            >
-              <item.icon className={cn("h-4 w-4", item.active ? "text-white" : "text-white/80")} />
-              {item.label}
-            </button>
+            </div>
           ))}
         </nav>
 
-        {/* User Profile - Minimal Footer */}
-        <div className="p-4 mt-auto border-t border-white/10">
-          <div className="flex items-center gap-3">
-            <div className="h-8 w-8 rounded-full bg-white/20 flex items-center justify-center border border-white/10">
-              <span className="text-xs font-medium text-white">EM</span>
-            </div>
-            <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium truncate text-white">Eric Mwakio</p>
-              <p className="text-xs text-white/70 truncate">admin@quickpay.com</p>
-            </div>
-            <Button variant="ghost" size="icon" className="h-8 w-8 text-white/70 hover:bg-white/10 hover:text-white">
-              <Bell className="h-4 w-4" />
-            </Button>
-          </div>
+        {/* Divider */}
+        <div className="mx-4 border-t border-white/20 relative z-10"></div>
+
+        {/* Bottom Links */}
+        <div className="px-4 py-6 space-y-3 relative z-10">
+          {bottomLinks.map((link) => (
+            <button
+              key={link.id}
+              className="w-full text-left text-xs font-semibold text-white/80 hover:text-white py-2 transition-colors tracking-wide"
+            >
+              {link.label}
+            </button>
+          ))}
         </div>
       </div>
     </div>

@@ -62,16 +62,11 @@ export function PaymentsTable({ payments }: PaymentsTableProps) {
     <>
       {/* Mobile Card View */}
       <div className="block sm:hidden space-y-3">
+        {/* Mobile title kept simple */}
         <div className="flex items-center justify-between mb-4">
           <div>
-            <h3 className="text-base font-semibold">Recent Payments</h3>
-            <p className="text-xs text-muted-foreground mt-0.5">
-              {payments.length} payment{payments.length !== 1 ? 's' : ''}
-            </p>
+            <h3 className="text-sm font-semibold text-muted-foreground">Recent Transactions</h3>
           </div>
-          <Button variant="outline" size="sm" className="h-9">
-            View All
-          </Button>
         </div>
         {payments.map((payment) => {
           const { icon: StatusIcon, variant, className } = statusConfig[payment.status];
@@ -139,22 +134,8 @@ export function PaymentsTable({ payments }: PaymentsTableProps) {
       </div>
 
       {/* Desktop Table View */}
-      <div className="hidden sm:block rounded-lg border border-border bg-card shadow-sm">
-        <div className="p-4 sm:p-6 border-b border-border">
-          <div className="flex items-center justify-between">
-            <div>
-              <h3 className="text-lg font-semibold">Recent Payments</h3>
-              <p className="text-sm text-muted-foreground mt-1">
-                A list of your recent payments and transactions
-              </p>
-            </div>
-            <Button variant="outline" size="sm" className="h-9">
-              View All
-            </Button>
-          </div>
-        </div>
-
-        <div className="overflow-x-auto -mx-px">
+      <div className="rounded-lg border border-border bg-card shadow-sm overflow-hidden">
+        <div className="overflow-x-auto">
           <Table>
             <TableHeader>
               <TableRow className="hover:bg-transparent">
@@ -172,7 +153,7 @@ export function PaymentsTable({ payments }: PaymentsTableProps) {
                 return (
                   <TableRow
                     key={payment.id}
-                    className="hover:bg-muted/50 transition-colors cursor-pointer"
+                    className="hover:bg-muted/80 transition-colors cursor-pointer border-b border-border/40 last:border-b-0"
                     onClick={() => handleViewPayment(payment)}
                   >
                     <TableCell className="min-w-45">
